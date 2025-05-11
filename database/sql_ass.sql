@@ -132,12 +132,24 @@ who do not have a grade greater than 100. Return customer_id, cust_name, city, g
 
 /*3.Write a SQL query that displays order number, purchase amount, and the
 achieved and unachieved percentage (%) for those orders that exceed 50%of the target value of 6000.*/
+/*select
+ord_no,
+purch_amt,
+(purch_amt / 6000) * 100 AS achieved,
+((purch_amt / 6000) * 100)-100 AS unachieved
+from orders
+where purch_amt >= 3000;*/
+
 
 /*4. write a SQL query to calculate the total purchase amount of all orders. Return total purchase amount.   */
 #select sum(purch_amt) from orders as total;
 
 /*  5.write a SQL query to find the highest purchase amount ordered by each customer. Return customer ID, maximum purchase amount. */
-
+/*SELECT 
+customer_id, 
+MAX(purch_amt) AS maximum
+FROM orders
+GROUP BY customer_id;*/
 
 /*  6.write a SQL query to calculate the average product price. Return average product price. */
 #select avg(pro_price) from item_mast;
@@ -291,3 +303,14 @@ delimiter ;*/
 
 
 /* 20.Create a stored procedure AssignManagerToDepartment that assigns a newmanager to all employees in a specific department  */
+/*Delimiter $$
+create procedure AssignManagerToDepartment(IN x INT,IN y INT)
+begin
+	update employees set 
+     manager_id = y
+     where department_id = x ;
+end $$
+Delimiter ;*/
+
+#call AssignManagerToDepartment(20,200);
+
