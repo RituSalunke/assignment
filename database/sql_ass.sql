@@ -300,7 +300,36 @@ delimiter ;*/
 #call GetTopPaidEmployees();
 
 /*  19.Create a stored procedure PromoteEmployee that increases an employee’s salaryand changes their job role. */
+/*drop procedure PromoteEmployee;
+DELIMITER $$
+CREATE PROCEDURE PromoteEmployee (
+    IN empId INT,
+    IN newSalary DECIMAL(10, 2),
+    IN newJobId VARCHAR(10)
+)
+BEGIN
+    -- Optional: Check if newSalary is within the new job's salary range
+    DECLARE minSal DECIMAL(10, 2);
+    DECLARE maxSal DECIMAL(10, 2);
+    
+    SELECT min_salary, max_salary 
+    INTO minSal, maxSal 
+    FROM jobs 
+    WHERE job_id = newJobId;
 
+    IF newSalary < minSal OR newSalary > maxSal THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'New salary is not within the range for the new job role.';
+    ELSE
+        UPDATE employees
+        SET salary = newSalary,
+            job_id = newJobId
+        WHERE employee_id = empId;
+    END IF;
+END $$
+DELIMITER ;*/
+
+#CALL PromoteEmployee(100, 16000, 'AC_MGR');
 
 /* 20.Create a stored procedure AssignManagerToDepartment that assigns a newmanager to all employees in a specific department  */
 /*Delimiter $$
